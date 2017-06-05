@@ -2,8 +2,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Electronic-Service</title>
-<style type="text/css" href="${pageContext.request.contextPath}/static/css/bootstrap.min.css"></style>
-<style type="text/css" href="${pageContext.request.contextPath}/static/css/bootstrap-theme.min.css"></style>
+<link link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/bootstrap.min.css"/>
+<link link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/bootstrap-theme.min.css"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/main.js"></script>
