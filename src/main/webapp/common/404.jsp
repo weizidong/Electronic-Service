@@ -5,10 +5,10 @@
 <%@include file="/common/head.jsp"%>
 <body>
 	<%@include file="/common/header.jsp"%>
-	${user.name}显示用户
+	404页面不见了。。。
 	<%@include file="/common/footer.jsp"%>
 </body>
 <script type="text/javascript">
-	setTitle('显示用户');
+	setTitle('404');
 </script>
 </html>
