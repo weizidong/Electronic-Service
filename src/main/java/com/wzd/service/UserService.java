@@ -8,4 +8,7 @@ public interface UserService {
 
 	// 创建
 	public void create(User user);
+
+	// 登录
+	public User login(String userid, String pwd);
 }

@@ -5,18 +5,10 @@
 <%@include file="/common/head.jsp"%>
 <body>
 	<%@include file="/common/header.jsp"%>
-	<form action="${pageContext.request.contextPath}/user/login"
-		method="post">
-		<div>
-			<input id="userid" name="userid" />
-		</div>
-		<div>
-			<input id="pwd" name="pwd" />
-		</div>
-	</form>
+	${user.name}显示用户
 	<%@include file="/common/footer.jsp"%>
 </body>
 <script type="text/javascript">
-	setTitle('首页');
+	setTitle('显示用户');
 </script>
 </html>

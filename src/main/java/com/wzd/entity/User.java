@@ -1,20 +1,15 @@
 package com.wzd.entity;
 
-import java.util.Date;
-
-import javax.persistence.Id;
-
 public class User {
-	@Id
     private Integer id;
 
     private String name;
 
-    private Integer sex;
+    private Integer type;
 
-    private Date birthday;
+    private String userid;
 
-    private String mark;
+    private String pwd;
 
     public Integer getId() {
         return id;
@@ -32,27 +27,27 @@ public class User {
         this.name = name == null ? null : name.trim();
     }
 
-    public Integer getSex() {
-        return sex;
+    public Integer getType() {
+        return type;
     }
 
-    public void setSex(Integer sex) {
-        this.sex = sex;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setUserid(String userid) {
+        this.userid = userid == null ? null : userid.trim();
     }
 
-    public String getMark() {
-        return mark;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setMark(String mark) {
-        this.mark = mark == null ? null : mark.trim();
+    public void setPwd(String pwd) {
+        this.pwd = pwd == null ? null : pwd.trim();
     }
 }
