@@ -15,33 +15,33 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="userid" class="col-sm-2 control-label">案件号：</label>
+				<label for="title" class="col-sm-2 control-label">案件号：</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="title" name="title" placeholder="请输入案件号...">
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="userid" class="col-sm-2 control-label">发送对象：</label>
+				<label for="target" class="col-sm-2 control-label">发送对象：</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="target" name="target" placeholder="请输入发送对象...">
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="userid" class="col-sm-2 control-label">身份证：</label>
+				<label for="idCard" class="col-sm-2 control-label">身份证：</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="idCard" name="idCard" placeholder="请输入身份证号码...">
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="userid" class="col-sm-2 control-label">手机号码：</label>
+				<label for="phone" class="col-sm-2 control-label">手机号码：</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="phone" name="phone" placeholder="请输入手机号码...">
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="userid" class="col-sm-2 control-label">截止时间：</label>
+				<label for="trialTime" class="col-sm-2 control-label">截止时间：</label>
 				<div class="col-sm-10">
-					<input type="datetime" class="form-control" id="trialTime" name="trialTime" value="2017-06-07" placeholder="请输入截止时间...">
+					<input type="datetime" class="form-control" id="trialTime" name="trialTime" placeholder="请输入截止时间...">
 				</div>
 			</div>
 			<div class="form-group">
