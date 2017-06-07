@@ -39,9 +39,9 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="userid" class="col-sm-2 control-label">手机号码：</label>
+				<label for="userid" class="col-sm-2 control-label">截止时间：</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="phone" name="phone" placeholder="请输入手机号码...">
+					<input type="datetime" class="form-control" id="trialTime" name="trialTime" value="2017-06-07" placeholder="请输入截止时间...">
 				</div>
 			</div>
 			<div class="form-group">
