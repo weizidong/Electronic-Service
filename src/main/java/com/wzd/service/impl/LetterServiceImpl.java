@@ -42,7 +42,7 @@ public class LetterServiceImpl implements LetterService {
 	}
 
 	@Override
-	public List<Letter> find(int page, int pageSize, String filed, String word) {
+	public List<Letter> find(Integer page, Integer pageSize, String filed, String word) {
 		return null;
 	}
 

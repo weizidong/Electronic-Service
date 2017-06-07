@@ -15,7 +15,7 @@ public interface LetterService {
 	public void create(Letter l);
 
 	// 获取电子函列表
-	public List<Letter> find(int page, int pageSize, String filed, String word);
+	public List<Letter> find(Integer page, Integer pageSize, String filed, String word);
 
 	// 删除电子函
 	public void delete(int id);
