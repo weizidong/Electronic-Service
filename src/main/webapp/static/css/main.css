@@ -1,5 +1,25 @@
-.header{
+.header {
 	background: red;
 	height: 70px;
 	width: 100%;
+}
+
+.page {
+	min-width: 1300px;
+	text-align: center;
+}
+
+th {
+	text-align: center;
+}
+
+td {
+	vertical-align: middle !important;
+}
+
+.pointer, a {
+	cursor: pointer;
+}
+.text_right{
+	text-align: right;
 }

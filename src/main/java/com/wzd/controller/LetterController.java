@@ -24,18 +24,26 @@ public class LetterController {
 	private LetterService letterService;
 
 	@RequestMapping("/list")
-	public String list(@RequestParam(value = "page", required = false) Integer page, 
+	public String list(@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "pageSize", required = false) Integer pageSize,
-			@RequestParam(value = "filed", required = false) String filed, 
+			@RequestParam(value = "filed", required = false) String filed,
 			@RequestParam(value = "word", required = false) String word, Model model) {
-		System.out.println("page="+page+",pageSize="+pageSize+",filed="+filed+",word="+word);
+		System.out.println("page=" + page + ",pageSize=" + pageSize + ",filed=" + filed + ",word=" + word);
 		List<Letter> letters = letterService.find(page, pageSize, filed, word);
 		model.addAttribute("letters", letters);
 		return "letter/list";
 	}
 
 	@RequestMapping("/get")
-	public String toIndex(HttpServletRequest request, Model model) {
+	public String get(HttpServletRequest request, Model model) {
+		int userId = Integer.parseInt(request.getParameter("id"));
+		User user = userService.getUserById(userId);
+		model.addAttribute("user", user);
+		return "showUser";
+	}
+
+	@RequestMapping("/send")
+	public String send(HttpServletRequest request, Model model) {
 		int userId = Integer.parseInt(request.getParameter("id"));
 		User user = userService.getUserById(userId);
 		model.addAttribute("user", user);

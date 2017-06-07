@@ -9,4 +9,9 @@ public class Index {
 	public String index() {
 		return "index";
 	}
+
+	@RequestMapping("/send")
+	public String send() {
+		return "/letter/send";
+	}
 }
