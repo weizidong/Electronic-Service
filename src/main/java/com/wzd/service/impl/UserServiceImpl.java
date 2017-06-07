@@ -21,16 +21,6 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 
 	@Override
-	public User getUserById(int userId) {
-		return userDao.selectByPrimaryKey(userId);
-	}
-
-	@Override
-	public void create(User user) {
-		userDao.insertSelective(user);
-	}
-
-	@Override
 	public User login(String userid, String pwd) {
 		UserExample e = new UserExample();
 		Criteria c = e.createCriteria();
@@ -85,5 +75,11 @@ public class UserServiceImpl implements UserService {
 			u.setPwd(null);
 		}
 		userDao.insertSelective(u);
+	}
+
+	@Override
+	public String changePwd(Integer id, String old, String pwd) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

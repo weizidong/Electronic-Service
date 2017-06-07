@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.BeanParam;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,19 +36,20 @@ public class LetterController {
 		return "letter/list";
 	}
 
-	@RequestMapping("/get")
+	@RequestMapping("/get/{id}")
 	public String get(HttpServletRequest request, Model model) {
-		int userId = Integer.parseInt(request.getParameter("id"));
-		User user = userService.getUserById(userId);
-		model.addAttribute("user", user);
-		return "showUser";
+		return "letter/one";
 	}
 
 	@RequestMapping("/send")
-	public String send(HttpServletRequest request, Model model) {
-		int userId = Integer.parseInt(request.getParameter("id"));
-		User user = userService.getUserById(userId);
-		model.addAttribute("user", user);
-		return "showUser";
+	public String send(@BeanParam Letter l, @ModelAttribute("admin") User user, HttpServletRequest request,
+			Model model) {
+		l = letterService.send(l);
+		System.out.println(request.getServerName());
+		// SMSUtil.send(SMS.summons, new String[] { l.getPhone() },
+		// new String[] { l.getTarget(), user.getName(), l.getTitle(),
+		// request.getServerName(), l.getCode(),
+		// DateFormatUtils.format(l.getTrialTime(), "yyyy-MM-dd HH:mm") });
+		return "letter/list";
 	}
 }

@@ -9,6 +9,8 @@ import javax.persistence.Transient;
 public class Letter {
 	@Id
 	private Integer id;
+	// 送达文件名
+	private String title;
 	// 送达目标
 	private String target;
 	// 证件号码

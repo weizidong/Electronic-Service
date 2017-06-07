@@ -20,4 +20,7 @@ public interface LetterService {
 	// 删除电子函
 	public void delete(int id);
 
+	// 发送电子函
+	public Letter send(Letter l);
+
 }

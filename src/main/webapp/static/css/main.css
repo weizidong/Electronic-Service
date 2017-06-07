@@ -1,25 +1,11 @@
-.header {
-	background: red;
-	height: 70px;
-	width: 100%;
-}
+.header{top:0;height:70px;background:rgba(255, 0, 0, 0.73);}
+.page{top:70px;bottom:70px;min-width:1300px;text-align:center;}
+.footer{bottom:0;height:70px;}
+.footer,.header,.page{position:fixed;left:0;right:0;}
 
-.page {
-	min-width: 1300px;
-	text-align: center;
-}
-
-th {
-	text-align: center;
-}
-
-td {
-	vertical-align: middle !important;
-}
-
-.pointer, a {
-	cursor: pointer;
-}
-.text_right{
-	text-align: right;
-}
+.header .title{}
+th{text-align:center;}
+td{vertical-align:middle !important;}
+.pointer,a{cursor:pointer;}
+.text_right{text-align:right;}
+.login-form{width:50%;margin-left:25%;margin-top: 10%;}

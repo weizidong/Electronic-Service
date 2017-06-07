@@ -1,5 +1,6 @@
 package com.wzd.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import com.wzd.entity.LetterExample;
 import com.wzd.entity.LetterExample.Criteria;
 import com.wzd.service.FileService;
 import com.wzd.service.LetterService;
+import com.wzd.utils.CodeUtil;
 
 @Service
 public class LetterServiceImpl implements LetterService {
@@ -56,6 +58,15 @@ public class LetterServiceImpl implements LetterService {
 	public Letter getById(int id) {
 		Letter l = letterDao.selectByPrimaryKey(id);
 		l.setFiles(fileService.find(l.getId()));
+		return l;
+	}
+
+	@Override
+	public Letter send(Letter l) {
+		String code = CodeUtil.get(8);
+		l.setCode(code);
+		l.setSendTime(new Date());
+		letterDao.insertSelective(l);
 		return l;
 	}
 }

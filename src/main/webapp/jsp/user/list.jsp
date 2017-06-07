@@ -47,14 +47,28 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+	        <h4 class="modal-title" id="myModalLabel">注册新用户</h4>
 	      </div>
 	      <div class="modal-body">
-	        ...
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
+	        <form action="${pageContext.request.contextPath}/user/register" method="post">
+	        	<input name="type" style="visibility: hidden;" value="0">
+	        	<div class="form-group">
+					<label for="exampleInputEmail1">姓名：</label>
+					<input type="text" name="name" class="form-control" id="name" placeholder="请输入姓名...">
+				</div>
+	        	<div class="form-group">
+					<label for="exampleInputEmail1">账号：</label>
+					<input type="text" name="userid" class="form-control" id="userid" placeholder="请输入账号...">
+				</div>
+	        	<div class="form-group">
+					<label for="exampleInputEmail1">密码：</label>
+					<input type="password" name="pwd" class="form-control" id="pwd" placeholder="请输入密码...">
+				</div>
+				<div class="modal-footer">
+				    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				    <button type="submit" class="btn btn-primary">确定</button>
+			    </div>
+	        </form>
 	      </div>
 	    </div>
 	  </div>

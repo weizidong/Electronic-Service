@@ -4,11 +4,6 @@ import com.wzd.Dto.PageInfo;
 import com.wzd.entity.User;
 
 public interface UserService {
-	// 根据ID获取
-	public User getUserById(int userId);
-
-	// 创建
-	public void create(User user);
 
 	// 登录
 	public User login(String userid, String pwd);
@@ -18,4 +13,7 @@ public interface UserService {
 
 	// 注册用户
 	public void register(User u);
+
+	// 修改密码
+	public String changePwd(Integer id, String old, String pwd);
 }
