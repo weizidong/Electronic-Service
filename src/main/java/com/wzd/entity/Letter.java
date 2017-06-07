@@ -6,28 +6,37 @@ import java.util.List;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import com.alibaba.fastjson.JSON;
+
 public class Letter {
 	@Id
 	private Integer id;
-	// 送达文件名
-	private String title;
-	// 送达目标
+
 	private String target;
-	// 证件号码
+
 	private String idCard;
-	// 手机
+
 	private String phone;
-	// 验证码
+
 	private String code;
-	// 送达时间
+
 	private Date sendTime;
-	// 签收时间
+
 	private Date receiveTime;
-	// 审理时间
+
 	private Date trialTime;
-	// 附件信息
+
+	private String title;
 	@Transient
 	private List<File> files;
+
+	public List<File> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<File> files) {
+		this.files = files;
+	}
 
 	public Integer getId() {
 		return id;
@@ -93,12 +102,17 @@ public class Letter {
 		this.trialTime = trialTime;
 	}
 
-	public List<File> getFiles() {
-		return files;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setFiles(List<File> files) {
-		this.files = files;
+	public void setTitle(String title) {
+		this.title = title == null ? null : title.trim();
+	}
+
+	@Override
+	public String toString() {
+		return JSON.toJSONString(this);
 	}
 
 }

@@ -11,9 +11,6 @@ public interface LetterService {
 	// 根据id获取
 	public Letter getById(int id);
 
-	// 创建电子函
-	public void create(Letter l);
-
 	// 获取电子函列表
 	public List<Letter> find(Integer page, Integer pageSize, String filed, String word);
 

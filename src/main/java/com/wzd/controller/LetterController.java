@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.BeanParam;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wzd.entity.Letter;
 import com.wzd.entity.User;
+import com.wzd.enums.SMS;
 import com.wzd.service.LetterService;
 import com.wzd.service.UserService;
+import com.wzd.utils.SMSUtil;
 
 @Controller
 @RequestMapping("/letter")
@@ -45,11 +48,9 @@ public class LetterController {
 	public String send(@BeanParam Letter l, @ModelAttribute("admin") User user, HttpServletRequest request,
 			Model model) {
 		l = letterService.send(l);
-		System.out.println(request.getServerName());
-		// SMSUtil.send(SMS.summons, new String[] { l.getPhone() },
-		// new String[] { l.getTarget(), user.getName(), l.getTitle(),
-		// request.getServerName(), l.getCode(),
-		// DateFormatUtils.format(l.getTrialTime(), "yyyy-MM-dd HH:mm") });
+		String url = request.getScheme() + "://" + request.getServerName() + "/get/" + l.getId();
+		SMSUtil.send(SMS.summons, new String[] { l.getPhone() }, new String[] { l.getTarget(), user.getName(),
+				l.getTitle(), url, l.getCode(), DateFormatUtils.format(l.getTrialTime(), "yyyy-MM-dd HH:mm") });
 		return "letter/list";
 	}
 }

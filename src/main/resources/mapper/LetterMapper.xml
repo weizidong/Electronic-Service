@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wzd.dao.LetterDao" >
+<mapper namespace="com.wzd.dao.LetterMapper" >
   <resultMap id="BaseResultMap" type="com.wzd.entity.Letter" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="target" property="target" jdbcType="VARCHAR" />
@@ -10,6 +10,7 @@
     <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
     <result column="receive_time" property="receiveTime" jdbcType="TIMESTAMP" />
     <result column="trial_time" property="trialTime" jdbcType="TIMESTAMP" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, target, id_card, phone, code, send_time, receive_time, trial_time
+    id, target, id_card, phone, code, send_time, receive_time, trial_time, title
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wzd.entity.LetterExample" >
     select
@@ -108,10 +109,10 @@
     </selectKey>
     insert into letter (target, id_card, phone, 
       code, send_time, receive_time, 
-      trial_time)
+      trial_time, title)
     values (#{target,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{code,jdbcType=VARCHAR}, #{sendTime,jdbcType=TIMESTAMP}, #{receiveTime,jdbcType=TIMESTAMP}, 
-      #{trialTime,jdbcType=TIMESTAMP})
+      #{trialTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wzd.entity.Letter" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -140,6 +141,9 @@
       <if test="trialTime != null" >
         trial_time,
       </if>
+      <if test="title != null" >
+        title,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="target != null" >
@@ -162,6 +166,9 @@
       </if>
       <if test="trialTime != null" >
         #{trialTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -198,6 +205,9 @@
       <if test="record.trialTime != null" >
         trial_time = #{record.trialTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -212,7 +222,8 @@
       code = #{record.code,jdbcType=VARCHAR},
       send_time = #{record.sendTime,jdbcType=TIMESTAMP},
       receive_time = #{record.receiveTime,jdbcType=TIMESTAMP},
-      trial_time = #{record.trialTime,jdbcType=TIMESTAMP}
+      trial_time = #{record.trialTime,jdbcType=TIMESTAMP},
+      title = #{record.title,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -241,6 +252,9 @@
       <if test="trialTime != null" >
         trial_time = #{trialTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -252,7 +266,8 @@
       code = #{code,jdbcType=VARCHAR},
       send_time = #{sendTime,jdbcType=TIMESTAMP},
       receive_time = #{receiveTime,jdbcType=TIMESTAMP},
-      trial_time = #{trialTime,jdbcType=TIMESTAMP}
+      trial_time = #{trialTime,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

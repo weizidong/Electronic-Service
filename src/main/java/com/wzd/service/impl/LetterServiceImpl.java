@@ -38,12 +38,6 @@ public class LetterServiceImpl implements LetterService {
 	}
 
 	@Override
-	public void create(Letter l) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public List<Letter> find(Integer page, Integer pageSize, String filed, String word) {
 		return null;
 	}
