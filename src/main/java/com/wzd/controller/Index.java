@@ -12,6 +12,6 @@ public class Index {
 
 	@RequestMapping("/send")
 	public String send() {
-		return "/letter/send";
+		return "letter/send";
 	}
 }
