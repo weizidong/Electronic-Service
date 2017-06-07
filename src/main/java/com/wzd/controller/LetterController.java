@@ -47,6 +47,7 @@ public class LetterController {
 	@RequestMapping("/send")
 	public String send(@BeanParam Letter l, @ModelAttribute("admin") User user, HttpServletRequest request,
 			Model model) {
+		System.out.println("send:" + l);
 		l = letterService.send(l);
 		String url = request.getScheme() + "://" + request.getServerName() + "/get/" + l.getId();
 		SMSUtil.send(SMS.summons, new String[] { l.getPhone() }, new String[] { l.getTarget(), user.getName(),

@@ -10,7 +10,7 @@ import com.wzd.entity.User;
 
 public class LoginInterceptor implements HandlerInterceptor {
 	// 不拦截 "/login" 请求
-	private static final String[] IGNORE_URI = { "/", "/user/login", "/letter/get/" };
+	private static final String[] IGNORE_URI = { "/user/login", "/letter/get/" };
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e)
@@ -33,7 +33,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		// 获取请求的 URL
 		String url = request.getServletPath();
 		for (String s : IGNORE_URI) {
-			if (url.contains(s)) {
+			if (url.equals("/") || url.contains(s)) {
 				flag = true;
 				break;
 			}
