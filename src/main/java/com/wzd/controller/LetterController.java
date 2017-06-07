@@ -52,6 +52,7 @@ public class LetterController {
 		String url = request.getScheme() + "://" + request.getServerName() + "/get/" + l.getId();
 		SMSUtil.send(SMS.summons, new String[] { l.getPhone() }, new String[] { l.getTarget(), user.getName(),
 				l.getTitle(), url, l.getCode(), DateFormatUtils.format(l.getTrialTime(), "yyyy-MM-dd HH:mm") });
+		model.addAttribute("msg", "发送成功!");
 		return "letter/send";
 	}
 }
