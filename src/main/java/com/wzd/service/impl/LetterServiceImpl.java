@@ -23,9 +23,10 @@ public class LetterServiceImpl implements LetterService {
 	private FileService fileService;
 
 	@Override
-	public Letter get(String idCard, String code) {
+	public Letter get(Integer id, String idCard, String code) {
 		LetterExample e = new LetterExample();
 		Criteria c = e.createCriteria();
+		c.andIdEqualTo(id);
 		c.andIdCardEqualTo(idCard);
 		c.andCodeEqualTo(code);
 		List<Letter> letters = letterDao.selectByExample(e);
