@@ -1,4 +1,4 @@
-package com.wzd.Dto;
+package com.wzd.dto;
 
 public class PageInfo {
 	private int all;

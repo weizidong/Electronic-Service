@@ -1,6 +1,7 @@
 package com.wzd.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -30,6 +31,9 @@ public class SMSUtil {
 	private static final String APP_SECRET = "efe43d82fc0c";
 
 	public static String send(String templateid, String[] mobiles, String[] params) {
+		System.out.println(templateid);
+		System.out.println(Arrays.toString(mobiles));
+		System.out.println(Arrays.toString(params));
 		HttpClient httpClient = null;
 		HttpPost httpPost = null;
 		String result = null;

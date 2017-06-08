@@ -6,9 +6,7 @@
 	<%@include file="/common/header.jsp"%>
 	<div class="page container-fluid">
 		<form action="${pageContext.request.contextPath}/letter/send" method="post" class="form-horizontal">
-			<c:if test="${requestScope.msg != null}">
-				<div>${requestScope.msg}</div>
-			</c:if>
+			<%@include file="/common/msg.jsp"%>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<h2>发送电子函</h2>

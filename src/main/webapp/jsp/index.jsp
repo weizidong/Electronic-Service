@@ -7,9 +7,7 @@
 	<%@include file="/common/header.jsp"%>
 	<div class="page container-fluid">
 		<form class="form-horizontal login-form" action="${pageContext.request.contextPath}/user/login" method="post">
-			<c:if test="${requestScope.msg != null}">
-				<div>${requestScope.msg}</div>
-			</c:if>
+			<%@include file="/common/msg.jsp"%>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<h2>登录</h2>

@@ -10,16 +10,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.wzd.Dto.PageInfo;
+import com.wzd.dto.Msg;
+import com.wzd.dto.PageInfo;
 import com.wzd.entity.User;
 import com.wzd.service.LetterService;
 import com.wzd.service.UserService;
 
 @Controller
 @RequestMapping("/user")
-@SessionAttributes("admin")
 public class UserController {
 	@Resource
 	private UserService userService;
@@ -27,15 +27,16 @@ public class UserController {
 	private LetterService letterService;
 
 	@RequestMapping("/login")
-	public String login(@BeanParam User u, Model model) {
+	public String login(@BeanParam User u, HttpSession session, RedirectAttributes attr, Model model) {
 		System.out.println("login:" + u);
 		User user = userService.login(u.getUserid(), u.getPwd());
 		if (user == null) {
-			model.addAttribute("msg", "账号或密码错误！");
-			return "index";
+			attr.addFlashAttribute("msg", Msg.error("账号或密码错误！"));
+			return "redirect:/";
 		}
+		attr.addFlashAttribute("msg", Msg.success("登录成功！"));
 		user.setPwd(null);
-		model.addAttribute("admin", user);
+		session.setAttribute("user", user);
 		if (user.getType() == 1) {
 			return "redirect:/user/list";
 		}
@@ -43,22 +44,26 @@ public class UserController {
 	}
 
 	@RequestMapping("/register")
-	public @ResponseBody String register(@BeanParam User u, Model model) {
+	public String register(@BeanParam User u, RedirectAttributes attr) {
 		System.out.println("register:" + u);
 		userService.register(u);
-		return "用户注册成功！";
+		attr.addFlashAttribute("msg", Msg.success("用户注册成功！"));
+		return "redirect:/user/list";
 	}
 
 	@RequestMapping("/changePwd")
 	public @ResponseBody String changePwd(@FormParam("pwd") String pwd, @FormParam("old") String old,
-			HttpSession session, Model model) {
+			HttpSession session, RedirectAttributes attr) {
 		User u = (User) session.getAttribute("user");
 		System.out.println("old=" + old + ",pwd=" + pwd + ",user=" + u);
 		String msg = userService.changePwd(u.getId(), old, pwd);
 		if (msg != null) {
-			model.addAttribute("msg", msg);
+			attr.addFlashAttribute("msg", Msg.error(msg));
+		} else {
+			attr.addFlashAttribute("msg", Msg.success("密码修改成功！请重新登录!"));
 		}
-		return "redirect:/user/list";
+		session.removeAttribute("user");
+		return "redirect:/";
 	}
 
 	@RequestMapping("/list")

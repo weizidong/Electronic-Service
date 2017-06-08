@@ -1,6 +1,6 @@
 package com.wzd.service;
 
-import com.wzd.Dto.PageInfo;
+import com.wzd.dto.PageInfo;
 import com.wzd.entity.User;
 
 public interface UserService {

@@ -7,6 +7,7 @@
 <body>
 	<%@include file="/common/header.jsp"%>
 	<div class="page container-fluid">
+		<%@include file="/common/msg.jsp"%>
 		<div>
 			<h1>用户列表</h1>
 			<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#register">注册新用户</button>
