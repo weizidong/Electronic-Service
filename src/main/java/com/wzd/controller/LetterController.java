@@ -38,7 +38,6 @@ public class LetterController {
 			@RequestParam(value = "pageSize", required = false) Integer pageSize,
 			@RequestParam(value = "filed", required = false) String filed,
 			@RequestParam(value = "word", required = false) String word, Model model) {
-		System.out.println("page=" + page + ",pageSize=" + pageSize + ",filed=" + filed + ",word=" + word);
 		List<Letter> letters = letterService.find(page, pageSize, filed, word);
 		model.addAttribute("letters", letters);
 		return "letter/list";
@@ -62,9 +61,7 @@ public class LetterController {
 
 	@RequestMapping("/send")
 	public String send(@BeanParam Letter l, HttpSession session, HttpServletRequest request, Model model) {
-		System.out.println("send:" + l);
 		User user = (User) session.getAttribute("user");
-		System.out.println("admin:" + user);
 		l = letterService.send(l);
 		String url = request.getScheme() + "://" + request.getServerName() + "/get/" + l.getId();
 		SMSUtil.send(SMS.summons, new String[] { l.getPhone() }, new String[] { l.getTarget(), user.getName(),

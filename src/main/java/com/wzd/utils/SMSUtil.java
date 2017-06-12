@@ -1,11 +1,8 @@
 package com.wzd.utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -15,6 +12,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
 
@@ -25,15 +24,17 @@ import com.alibaba.fastjson.JSON;
  *
  */
 public class SMSUtil {
-	private static Log logger = LogFactory.getLog(SMSUtil.class);
+	private static final Logger log = LogManager.getLogger(SMSUtil.class);
 	private static final String MSG_PATH = "https://api.netease.im/sms/sendtemplate.action";
 	private static final String APP_KEY = "d3decf0df6fb068e25a64131b7ab2541";
 	private static final String APP_SECRET = "efe43d82fc0c";
 
 	public static String send(String templateid, String[] mobiles, String[] params) {
-		System.out.println(templateid);
-		System.out.println(Arrays.toString(mobiles));
-		System.out.println(Arrays.toString(params));
+		log.debug("模板ID：" + templateid);
+		log.debug("接收号码：" + JSON.toJSONString(mobiles));
+		log.debug("参数：" + JSON.toJSONString(params));
+		log.debug("发送短信中...");
+		Long start = System.currentTimeMillis();
 		HttpClient httpClient = null;
 		HttpPost httpPost = null;
 		String result = null;
@@ -63,12 +64,11 @@ public class SMSUtil {
 					result = EntityUtils.toString(resEntity, "utf-8");
 				}
 			}
-			logger.debug("发送短信中...");
-			logger.debug("templateid：" + templateid);
-			logger.debug("mobiles：" + JSON.toJSONString(mobiles));
-			logger.debug("params：" + JSON.toJSONString(params));
-			logger.debug("result：" + result);
+			Long end = System.currentTimeMillis();
+			log.debug("结果：" + result);
+			log.debug("发送成功！\t耗时：" + (end - start) + "ms");
 		} catch (Exception ex) {
+			log.debug("发送失败！");
 			ex.printStackTrace();
 		} finally {
 			HttpClientUtils.closeQuietly(httpClient);

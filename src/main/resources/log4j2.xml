@@ -35,7 +35,6 @@
 	<Loggers>
 		<logger name="org.springframework" level="warn"></logger>
 		<logger name="org.mybatis" level="warn"></logger>
-		<logger name="net.sf.ehcache" level="warn"></logger>
 		<logger name="org.apache" level="warn"></logger>
 		<Root level="all">
 			<AppenderRef ref="Console" />

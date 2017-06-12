@@ -15,5 +15,12 @@ public interface UserService {
 	public void register(User u);
 
 	// 修改密码
-	public String changePwd(Integer id, String old, String pwd);
+	public void changePwd(Integer id, String old, String pwd);
+
+	// 查找用户
+	public User get(String userid);
+
+	// 查找用户
+	public User getById(Integer id);
+
 }

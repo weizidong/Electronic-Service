@@ -28,7 +28,6 @@ public class UserController {
 
 	@RequestMapping("/login")
 	public String login(@BeanParam User u, HttpSession session, RedirectAttributes attr, Model model) {
-		System.out.println("login:" + u);
 		User user = userService.login(u.getUserid(), u.getPwd());
 		if (user == null) {
 			attr.addFlashAttribute("msg", Msg.error("账号或密码错误！"));
@@ -45,7 +44,6 @@ public class UserController {
 
 	@RequestMapping("/register")
 	public String register(@BeanParam User u, RedirectAttributes attr) {
-		System.out.println("register:" + u);
 		userService.register(u);
 		attr.addFlashAttribute("msg", Msg.success("用户注册成功！"));
 		return "redirect:/user/list";
@@ -55,12 +53,10 @@ public class UserController {
 	public @ResponseBody String changePwd(@FormParam("pwd") String pwd, @FormParam("old") String old,
 			HttpSession session, RedirectAttributes attr) {
 		User u = (User) session.getAttribute("user");
-		System.out.println("old=" + old + ",pwd=" + pwd + ",user=" + u);
-		String msg = userService.changePwd(u.getId(), old, pwd);
-		if (msg != null) {
-			attr.addFlashAttribute("msg", Msg.error(msg));
-		} else {
-			attr.addFlashAttribute("msg", Msg.success("密码修改成功！请重新登录!"));
+		try {
+			userService.changePwd(u.getId(), old, pwd);
+		} catch (RuntimeException e) {
+			attr.addFlashAttribute("msg", Msg.success(e.getMessage()));
 		}
 		session.removeAttribute("user");
 		return "redirect:/";
@@ -71,7 +67,6 @@ public class UserController {
 			@RequestParam(value = "pageSize", required = false) Integer pageSize,
 			@RequestParam(value = "filed", required = false) String filed,
 			@RequestParam(value = "word", required = false) String word, Model model) {
-		System.out.println("page=" + page + ",pageSize=" + pageSize + ",filed=" + filed + ",word=" + word);
 		PageInfo info = userService.find(page, pageSize, filed, word);
 		model.addAttribute("data", info);
 		return "user/list";

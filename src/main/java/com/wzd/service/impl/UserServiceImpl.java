@@ -30,6 +30,9 @@ public class UserServiceImpl implements UserService {
 		if (users != null && users.size() > 0) {
 			return users.get(0);
 		}
+		if (users.size() > 1) {
+			throw new RuntimeException("该用户名<" + userid + ">存在多个！");
+		}
 		return null;
 	}
 
@@ -69,6 +72,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void register(User u) {
+		UserExample e = new UserExample();
+		Criteria c = e.createCriteria();
+		c.andUseridEqualTo(u.getUserid());
+		List<User> users = userDao.selectByExample(e);
+		if (users != null) {
+			throw new RuntimeException("该用户名<" + u.getUserid() + ">已被注册！");
+		}
 		if (StringUtils.isNotBlank(u.getPwd())) {
 			u.setPwd(CheckSumBuilder.getMD5(u.getPwd()));
 		} else {
@@ -78,8 +88,51 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String changePwd(Integer id, String old, String pwd) {
-		// TODO Auto-generated method stub
+	public void changePwd(Integer id, String old, String pwd) {
+		UserExample e = new UserExample();
+		Criteria c = e.createCriteria();
+		c.andIdEqualTo(id);
+		List<User> users = userDao.selectByExample(e);
+		if (users == null || users.size() == 0) {
+			throw new RuntimeException("该用户<" + id + ">不存在！");
+		}
+		User u = users.get(0);
+		if (!StringUtils.equals(old, u.getPwd())
+				|| !StringUtils.equalsIgnoreCase(CheckSumBuilder.getMD5(old), u.getPwd())) {
+			throw new RuntimeException("原密码错误！");
+		}
+		u.setPwd(CheckSumBuilder.getMD5(pwd));
+		userDao.updateByPrimaryKeySelective(u);
+		throw new RuntimeException("密码修改成功！请重新登录！");
+	}
+
+	@Override
+	public User get(String userid) {
+		UserExample e = new UserExample();
+		Criteria c = e.createCriteria();
+		c.andUseridEqualTo(userid);
+		List<User> users = userDao.selectByExample(e);
+		if (users != null && users.size() == 1) {
+			return users.get(0);
+		}
+		if (users.size() > 1) {
+			throw new RuntimeException("该用户名<" + userid + ">存在多个！");
+		}
+		return null;
+	}
+
+	@Override
+	public User getById(Integer id) {
+		UserExample e = new UserExample();
+		Criteria c = e.createCriteria();
+		c.andIdEqualTo(id);
+		List<User> users = userDao.selectByExample(e);
+		if (users != null && users.size() == 1) {
+			return users.get(0);
+		}
+		if (users.size() > 1) {
+			throw new RuntimeException("该用户<" + id + ">存在多个！");
+		}
 		return null;
 	}
 }
