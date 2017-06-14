@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wzd.dto.Msg;
@@ -25,7 +24,7 @@ public class UserController {
 	private UserService userService;
 	@Resource
 	private LetterService letterService;
-
+	// 登录
 	@RequestMapping("/login")
 	public String login(@BeanParam User u, HttpSession session, RedirectAttributes attr, Model model) {
 		User user = userService.login(u.getUserid(), u.getPwd());
@@ -41,17 +40,17 @@ public class UserController {
 		}
 		return "redirect:/send";
 	}
-
+	// 注册
 	@RequestMapping("/register")
 	public String register(@BeanParam User u, RedirectAttributes attr) {
 		userService.register(u);
 		attr.addFlashAttribute("msg", Msg.success("用户注册成功！"));
 		return "redirect:/user/list";
 	}
-
+	// 修改密码
 	@RequestMapping("/changePwd")
-	public @ResponseBody String changePwd(@FormParam("pwd") String pwd, @FormParam("old") String old,
-			HttpSession session, RedirectAttributes attr) {
+	public String changePwd(@FormParam("pwd") String pwd, @FormParam("old") String old, HttpSession session,
+			RedirectAttributes attr) {
 		User u = (User) session.getAttribute("user");
 		try {
 			userService.changePwd(u.getId(), old, pwd);
@@ -61,7 +60,7 @@ public class UserController {
 		session.removeAttribute("user");
 		return "redirect:/";
 	}
-
+	// 列表
 	@RequestMapping("/list")
 	public String list(@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "pageSize", required = false) Integer pageSize,

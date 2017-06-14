@@ -15,24 +15,26 @@
 					<th>序号</th>
 					<th>案件号</th>
 					<th>通知对象</th>
+					<th>通知电话</th>
 					<th>证件号</th>
 					<th>送达回执</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${requestScope.data.list}" var="user">
+				<c:forEach items="${requestScope.data.letters}" var="letter">
 					<tr>
-						<td>${user.id}</td>
-						<td>${user.name}</td>
-						<td>${user.type == 1?'管理员':'普通用户'}</td>
-						<td>${user.userid}</td>
-						<td>${user.userid}</td>
+						<td>${letter.id}</td>
+						<td>${letter.title}</td>
+						<td>${letter.target}</td>
+						<td>${letter.phone}</td>
+						<td>${letter.idCard}</td>
+						<td>${letter.receiveTime != null?'已签收':'未签收'}</td>
 						<td>
 							<div class="btn-group" role="group">
-								<a class="btn btn-info" href="#" role="button">重发</a> 
-								<a class="btn btn-warning" href="#" role="button">查看回执</a>
-								<a class="btn btn-danger" href="#" role="button">删除</a>
+								<a class="btn btn-info" href="${pageContext.request.contextPath}/letter/resend/${letter.id}" role="button">重发</a> 
+								<a class="btn btn-warning" href="${pageContext.request.contextPath}/letter/receive/${letter.id}" role="button">查看回执</a>
+								<a class="btn btn-danger" href="${pageContext.request.contextPath}/letter/delete/${letter.id}" role="button">删除</a>
 							</div>
 						</td>
 					</tr>

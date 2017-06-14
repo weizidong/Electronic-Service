@@ -22,6 +22,8 @@ public class Letter {
 
 	private Date sendTime;
 
+	private String sender;
+
 	private Date receiveTime;
 
 	private Date trialTime;
@@ -36,6 +38,14 @@ public class Letter {
 
 	public void setFiles(List<File> files) {
 		this.files = files;
+	}
+
+	public String getSender() {
+		return sender;
+	}
+
+	public void setSender(String sender) {
+		this.sender = sender;
 	}
 
 	public Integer getId() {
