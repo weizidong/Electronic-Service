@@ -2,6 +2,8 @@ package com.wzd.handler;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,8 +36,10 @@ public class ExceptionHandler extends SimpleMappingExceptionResolver {
 			e.printStackTrace();
 		}
 		if (modelAndView == null) {
-			modelAndView = new ModelAndView("/500");
-			modelAndView.addObject("error.");
+			modelAndView = new ModelAndView("500");
+			Map<String, Object> map = new HashMap<>();
+			map.put("msg", ex.getMessage());
+			modelAndView.addObject(map);
 		}
 		return modelAndView;
 	}

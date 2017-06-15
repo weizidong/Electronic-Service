@@ -2,15 +2,16 @@ package com.wzd.dto;
 
 import com.alibaba.fastjson.JSON;
 
-public class Msg {
+@SuppressWarnings("serial")
+public class WebException extends Exception {
 	private Integer code;
 	private String msg;
 
-	public Msg() {
+	public WebException() {
 		super();
 	}
 
-	public Msg(Integer code, String msg) {
+	public WebException(Integer code, String msg) {
 		this.code = code;
 		this.msg = msg;
 	}
@@ -31,17 +32,16 @@ public class Msg {
 		this.msg = msg;
 	}
 
-	public static Msg success(String msg) {
-		return new Msg(200, msg);
+	public static WebException success(String msg) {
+		return new WebException(200, msg);
 	}
 
-	public static Msg error(String msg) {
-		return new Msg(500, msg);
+	public static WebException error(String msg) {
+		return new WebException(500, msg);
 	}
 
 	@Override
 	public String toString() {
 		return JSON.toJSONString(this);
 	}
-
 }

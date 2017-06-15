@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wzd.dto.WebException;
 import com.wzd.entity.User;
 import com.wzd.service.UserService;
 import com.wzd.utils.CheckSumBuilder;
@@ -26,13 +27,17 @@ public class Index {
 	}
 
 	@RequestMapping("/init/admin")
-	public @ResponseBody String init() {
+	public @ResponseBody WebException init() {
 		User admin = userService.get("admin");
-		if (admin == null) {
-			userService.login("admin", CheckSumBuilder.getMD5("123456"));
-		} else {
-			userService.changePwd(admin.getId(), admin.getPwd(), CheckSumBuilder.getMD5("123456"));
+		try {
+			if (admin == null) {
+				userService.login("admin", CheckSumBuilder.getMD5("123456"));
+			} else {
+				userService.changePwd(admin.getId(), admin.getPwd(), CheckSumBuilder.getMD5("123456"));
+			}
+		} catch (WebException e) {
+			return e;
 		}
-		return "letter/send";
+		return WebException.success("初始化成功！");
 	}
 }

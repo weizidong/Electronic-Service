@@ -4,10 +4,12 @@
 <%@include file="/common/head.jsp"%>
 <body>
 	<%@include file="/common/header.jsp"%>
-	500服务器出错了。。。
+	<div class="page container-fluid">
+		<div class="alert alert-danger" role="alert">${requestScope.msg}</div>
+	</div>
 	<%@include file="/common/footer.jsp"%>
 </body>
 <script type="text/javascript">
-	setTitle('500');
+	setTitle('出错了');
 </script>
 </html>

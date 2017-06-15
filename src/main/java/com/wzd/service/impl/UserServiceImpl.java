@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.wzd.dao.UserDao;
 import com.wzd.dto.PageInfo;
+import com.wzd.dto.WebException;
 import com.wzd.entity.User;
 import com.wzd.entity.UserExample;
 import com.wzd.entity.UserExample.Criteria;
@@ -21,7 +22,7 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 
 	@Override
-	public User login(String userid, String pwd) {
+	public User login(String userid, String pwd) throws WebException {
 		UserExample e = new UserExample();
 		Criteria c = e.createCriteria();
 		c.andUseridEqualTo(userid);
@@ -30,10 +31,7 @@ public class UserServiceImpl implements UserService {
 		if (users != null && users.size() > 0) {
 			return users.get(0);
 		}
-		if (users.size() > 1) {
-			throw new RuntimeException("该用户名<" + userid + ">存在多个！");
-		}
-		return null;
+		throw WebException.error("账号或密码错误！");
 	}
 
 	@Override
@@ -71,39 +69,40 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void register(User u) {
+	public void register(User u) throws WebException {
 		UserExample e = new UserExample();
 		Criteria c = e.createCriteria();
 		c.andUseridEqualTo(u.getUserid());
 		List<User> users = userDao.selectByExample(e);
-		if (users != null) {
-			throw new RuntimeException("该用户名<" + u.getUserid() + ">已被注册！");
+		if (users != null && users.size() > 0) {
+			throw WebException.error("该用户名<" + u.getUserid() + ">已被注册！");
 		}
 		if (StringUtils.isNotBlank(u.getPwd())) {
 			u.setPwd(CheckSumBuilder.getMD5(u.getPwd()));
 		} else {
-			u.setPwd(null);
+			u.setPwd(CheckSumBuilder.getMD5("123456"));
 		}
 		userDao.insertSelective(u);
+		throw WebException.success("用户注册成功！");
 	}
 
 	@Override
-	public void changePwd(Integer id, String old, String pwd) {
+	public void changePwd(Integer id, String old, String pwd) throws WebException {
 		UserExample e = new UserExample();
 		Criteria c = e.createCriteria();
 		c.andIdEqualTo(id);
 		List<User> users = userDao.selectByExample(e);
 		if (users == null || users.size() == 0) {
-			throw new RuntimeException("该用户<" + id + ">不存在！");
+			throw WebException.error("该用户<" + id + ">不存在！");
 		}
 		User u = users.get(0);
 		if (!StringUtils.equals(old, u.getPwd())
 				|| !StringUtils.equalsIgnoreCase(CheckSumBuilder.getMD5(old), u.getPwd())) {
-			throw new RuntimeException("原密码错误！");
+			throw WebException.error("原密码错误！");
 		}
 		u.setPwd(CheckSumBuilder.getMD5(pwd));
 		userDao.updateByPrimaryKeySelective(u);
-		throw new RuntimeException("密码修改成功！请重新登录！");
+		throw WebException.success("密码修改成功！请重新登录！");
 	}
 
 	@Override
@@ -134,5 +133,18 @@ public class UserServiceImpl implements UserService {
 			throw new RuntimeException("该用户<" + id + ">存在多个！");
 		}
 		return null;
+	}
+
+	@Override
+	public void delete(Integer id) {
+		userDao.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public void reset(Integer id) {
+		User user = new User();
+		user.setId(id);
+		user.setPwd(CheckSumBuilder.getMD5("123456"));
+		userDao.updateByPrimaryKeySelective(user);
 	}
 }

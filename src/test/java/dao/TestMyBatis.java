@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
+import com.wzd.dto.WebException;
 import com.wzd.entity.User;
 import com.wzd.service.UserService;
 
@@ -28,11 +29,14 @@ public class TestMyBatis {
 	// }
 
 	@Test
-	public void test1() {
+	public void test1() throws WebException {
 		User user = new User();
-		user.setName("钟成");
-//		userService.create(user);
-//		user = userService.getUserById(1);
+		user.setName("超级管理员");
+		user.setPwd("123456");
+		user.setType(1);
+		user.setUserid("admin");
+		userService.register(user);
+		// user = userService.getUserById(1);
 		logger.info(JSON.toJSONString(user));
 	}
 }

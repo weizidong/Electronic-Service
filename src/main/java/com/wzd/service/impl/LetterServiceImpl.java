@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.wzd.dao.LetterDao;
+import com.wzd.dto.WebException;
 import com.wzd.entity.Letter;
 import com.wzd.entity.LetterExample;
 import com.wzd.entity.LetterExample.Criteria;
@@ -23,7 +24,7 @@ public class LetterServiceImpl implements LetterService {
 	private FileService fileService;
 
 	@Override
-	public Letter get(Integer id, String idCard, String code) {
+	public Letter get(Integer id, String idCard, String code) throws WebException {
 		LetterExample e = new LetterExample();
 		Criteria c = e.createCriteria();
 		c.andIdEqualTo(id);
@@ -35,7 +36,7 @@ public class LetterServiceImpl implements LetterService {
 			l.setFiles(fileService.find(l.getId()));
 			return l;
 		}
-		return null;
+		throw WebException.error("身份证或验证码错误！");
 	}
 
 	@Override

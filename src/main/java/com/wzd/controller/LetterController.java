@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.wzd.dto.Msg;
+import com.wzd.dto.WebException;
 import com.wzd.entity.Letter;
 import com.wzd.entity.User;
 import com.wzd.enums.SMS;
@@ -33,6 +33,7 @@ public class LetterController {
 	private UserService userService;
 	@Resource
 	private LetterService letterService;
+
 	// 列表
 	@RequestMapping("/list")
 	public String list(@RequestParam(value = "page", required = false) Integer page,
@@ -43,22 +44,24 @@ public class LetterController {
 		model.addAttribute("letters", letters);
 		return "letter/list";
 	}
+
 	// 获取
 	@RequestMapping("/get/{id}")
 	public String get(@PathParam("id") Integer id, @FormParam("idCard") String idCard, @FormParam("code") String code,
 			HttpServletRequest request, Model model, RedirectAttributes attr) {
 		if (StringUtils.isNotBlank(idCard) && StringUtils.isNotBlank(code)) {
-			Letter l = letterService.get(id, idCard, code);
-			if (l == null) {
-				attr.addFlashAttribute("msg", Msg.error("身份证或验证码错误！"));
-			} else {
+			try {
+				Letter l = letterService.get(id, idCard, code);
 				model.addAttribute("letter", l);
+			} catch (WebException e) {
+				attr.addFlashAttribute("msg", e);
 			}
 		} else {
-			attr.addFlashAttribute("msg", Msg.error("身份证或验证码不能为空！"));
+			attr.addFlashAttribute("msg", WebException.error("身份证或验证码不能为空！"));
 		}
 		return "letter/one";
 	}
+
 	// 发送
 	@RequestMapping("/send")
 	public String send(@BeanParam Letter l, HttpSession session, HttpServletRequest request, Model model) {
